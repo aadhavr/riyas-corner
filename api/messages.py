@@ -17,29 +17,31 @@ class handler(BaseHTTPRequestHandler):
         body = self.rfile.read(length)
 
         if not API_KEY:
-            self.send_response(500)
-            self._cors()
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(b'{"error":{"message":"API key not configured on server."}}')
+            self._json(500, b'{"error":{"message":"API key not configured on server."}}')
             return
 
-        resp = requests.post(
-            "https://api.anthropic.com/v1/messages",
-            headers={
-                "Content-Type": "application/json",
-                "x-api-key": API_KEY,
-                "anthropic-version": "2023-06-01",
-            },
-            data=body,
-            timeout=30,
-        )
+        try:
+            resp = requests.post(
+                "https://api.anthropic.com/v1/messages",
+                headers={
+                    "Content-Type": "application/json",
+                    "x-api-key": API_KEY,
+                    "anthropic-version": "2023-06-01",
+                },
+                data=body,
+                timeout=30,
+            )
+            self._json(resp.status_code, resp.content)
+        except Exception as e:
+            msg = str(e).encode()
+            self._json(500, b'{"error":{"message":"Proxy error: ' + msg + b'"}}')
 
-        self.send_response(resp.status_code)
+    def _json(self, status, body):
+        self.send_response(status)
         self._cors()
         self.send_header("Content-Type", "application/json")
         self.end_headers()
-        self.wfile.write(resp.content)
+        self.wfile.write(body)
 
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
