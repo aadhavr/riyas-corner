@@ -1,11 +1,1 @@
-{
-  "version": 2,
-  "builds": [
-    { "src": "api/messages.py", "use": "@vercel/python" },
-    { "src": "index.html", "use": "@vercel/static" }
-  ],
-  "routes": [
-    { "src": "/api/messages", "dest": "/api/messages.py" },
-    { "src": "/", "dest": "/index.html" }
-  ]
-}
+{}
