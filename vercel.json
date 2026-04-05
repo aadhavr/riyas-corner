@@ -1,7 +1,3 @@
 {
-  "functions": {
-    "api/messages.js": {
-      "runtime": "nodejs18.x"
-    }
-  }
+  "framework": null
 }
