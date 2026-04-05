@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(claude-api)",
+      "Bash(curl:*)",
+      "Bash(pkill -f \"python3 server.py\")",
+      "Bash(xargs kill:*)",
+      "Bash(python3 /Users/aadhav/riya/server.py)",
+      "Bash(pip3 install:*)"
+    ]
+  }
+}
