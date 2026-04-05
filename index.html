@@ -11,50 +11,30 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:         #f5edda;
-      --bg-warm:    #ede3c6;
-      --card:       #fefcf5;
-      --terra:      #a83420;
-      --terra-dark: #861e10;
-      --amber:      #9a5e0a;
-      --rose:       #7c1e2e;
-      --ink:        #0e0604;
-      --mid:        #3a1808;
-      --muted:      #6a4420;
-      --border:     rgba(14, 6, 4, 0.18);
-      --shadow:     rgba(14, 6, 4, 0.14);
+      --bg:         #fdf3e3;
+      --bg-warm:    #f9ead0;
+      --card:       #fffbf4;
+      --terra:      #c0492b;
+      --terra-dark: #9e3820;
+      --amber:      #c97d1a;
+      --rose:       #a83040;
+      --ink:        #1c0f08;
+      --mid:        #5c3520;
+      --muted:      #9a7358;
+      --border:     #e5cca8;
+      --shadow:     rgba(80, 30, 10, 0.09);
     }
 
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #ede4cc;
-      background-image:
-        radial-gradient(ellipse at 50% 44%, rgba(255,254,244,0.72) 0%, transparent 62%),
-        radial-gradient(ellipse at 22% 30%, rgba(150,115,55,0.08) 0%, transparent 36%),
-        radial-gradient(ellipse at 74% 22%, rgba(135,105,48,0.06) 0%, transparent 32%),
-        radial-gradient(ellipse at 58% 72%, rgba(145,112,52,0.07) 0%, transparent 36%),
-        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='300' height='300' filter='url(%23p)' opacity='0.09'/></svg>");
+      background: var(--bg);
       color: var(--ink);
       min-height: 100vh;
       cursor: url('/default_hand.png') 36 31, auto;
     }
 
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 50% 50%, transparent 42%, rgba(60,38,10,0.20) 100%),
-        radial-gradient(ellipse at   0%   0%, rgba(65,42,12,0.16) 0%, transparent 42%),
-        radial-gradient(ellipse at 100%   0%, rgba(65,42,12,0.13) 0%, transparent 40%),
-        radial-gradient(ellipse at   0% 100%, rgba(65,42,12,0.13) 0%, transparent 40%),
-        radial-gradient(ellipse at 100% 100%, rgba(65,42,12,0.16) 0%, transparent 42%);
-      pointer-events: none;
-      z-index: 9997;
-    }
-
-    a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
+a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
 
     body.is-scrolling, body.is-scrolling a, body.is-scrolling button {
       cursor: url('/default_hand.png') 36 31, auto !important;
@@ -62,7 +42,7 @@
 
     /* ── MASTHEAD ──────────────────────────────────────── */
     header {
-      background: rgba(252, 248, 236, 0.96);
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-warm) 100%);
       border-bottom: 3px double var(--border);
     }
 
@@ -112,7 +92,7 @@
 
     /* ── SEARCH BAND ───────────────────────────────────── */
     .search-band {
-      background: rgba(245, 237, 215, 0.96);
+      background: var(--bg-warm);
       border-bottom: 1px solid var(--border);
     }
 
