@@ -6,7 +6,23 @@
       "Bash(pkill -f \"python3 server.py\")",
       "Bash(xargs kill:*)",
       "Bash(python3 /Users/aadhav/riya/server.py)",
-      "Bash(pip3 install:*)"
+      "Bash(pip3 install:*)",
+      "Bash(git:*)"
+    ]
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "agent",
+            "model": "claude-haiku-4-5-20251001",
+            "async": true,
+            "timeout": 60,
+            "prompt": "You are a git commit assistant for /Users/aadhav/riya. Run: git -C /Users/aadhav/riya status --porcelain. If the output is empty, stop — nothing to do. If there ARE changes: (1) git -C /Users/aadhav/riya add -A, (2) git -C /Users/aadhav/riya diff --cached --stat to understand what changed, (3) commit with a clear imperative message under 72 chars (e.g. 'Add Harvard museum API' or 'Fix Vercel routing config') — no Co-Authored-By trailer, (4) git -C /Users/aadhav/riya push."
+          }
+        ]
+      }
     ]
   }
 }
