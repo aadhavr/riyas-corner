@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 
 @app.route("/api/messages", methods=["POST", "OPTIONS"])
+@app.route("/", methods=["POST", "OPTIONS"])
 def messages():
     if request.method == "OPTIONS":
         r = Response()
@@ -33,3 +34,6 @@ def messages():
         return Response(resp.content, status=resp.status_code, mimetype="application/json")
     except Exception as e:
         return {"error": {"message": f"Proxy error: {str(e)}"}}, 500
+
+
+handler = app
