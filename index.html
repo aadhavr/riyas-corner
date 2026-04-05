@@ -31,6 +31,8 @@
       background: var(--bg);
       color: var(--ink);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       cursor: url('/default_hand.png') 36 31, auto;
     }
 
@@ -280,13 +282,10 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
       font-style: italic;
     }
 
-    /* hairline grid — borders are the gaps */
+    /* ── MASONRY ───────────────────────────────────────── */
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      column-count: 3;
+      column-gap: 16px;
     }
 
     /* ── CARD ──────────────────────────────────────────── */
@@ -294,24 +293,27 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
       background: var(--card);
       text-decoration: none;
       color: inherit;
-      display: flex;
-      flex-direction: column;
-      transition: background 0.15s;
+      display: block;
+      break-inside: avoid;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
-    .card:hover { background: var(--bg-warm); }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--shadow);
+    }
 
     .card-img-wrap {
       width: 100%;
-      aspect-ratio: 4 / 3;
       overflow: hidden;
       background: var(--bg-warm);
     }
 
     .card-img {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
       transition: transform 0.4s cubic-bezier(.2,.6,.3,1);
     }
@@ -320,10 +322,7 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
 
     .card-body {
       padding: 9px 11px 11px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      border-top: 2px solid var(--border);
+      border-top: 1px solid var(--border);
     }
 
     .card-source {
@@ -351,7 +350,7 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
     .card-meta {
       font-size: 10px;
       color: var(--muted);
-      margin-top: auto;
+      margin-top: 4px;
       line-height: 1.4;
     }
 
@@ -400,6 +399,8 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
       color: var(--muted);
     }
 
+    #output { flex: 1; }
+
     /* ── FOOTER ────────────────────────────────────────── */
     .page-footer {
       border-top: 3px double var(--border);
@@ -433,21 +434,21 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
     }
 
     /* ── RESPONSIVE ────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .grid { column-count: 2; }
+    }
+
     @media (max-width: 600px) {
       .masthead-meta span:not(:first-child) { display: none; }
       h1 { font-size: 46px; }
       .tagline { font-size: 10px; white-space: normal; text-align: center; }
       textarea { min-height: 64px; }
       .search-btn { padding: 0 20px; }
-      .grid { grid-template-columns: 1fr 1fr; }
-      .results-wrap { padding: 0 0 32px; }
-      .results-header { margin: 0 16px 12px; }
+      .grid { column-count: 1; }
+      .results-wrap { padding: 0 16px 32px; }
+      .results-header { margin: 0 0 12px; }
       .page-footer { flex-direction: column; gap: 3px; text-align: center; }
       .credit { display: none; }
-    }
-
-    @media (max-width: 400px) {
-      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
