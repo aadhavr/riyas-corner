@@ -1,6 +1,5 @@
 {
-  "routes": [
-    { "src": "/api/messages", "dest": "/api/messages.py" },
-    { "src": "/(.*)",          "dest": "/vibe-art.html"   }
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/vibe-art.html" }
   ]
 }
