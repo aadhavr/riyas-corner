@@ -1,49 +1,35 @@
 import os
 import requests
-from http.server import BaseHTTPRequestHandler
+from flask import Flask, request, Response
 
 API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 
+app = Flask(__name__)
 
-class handler(BaseHTTPRequestHandler):
 
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self._cors()
-        self.end_headers()
+@app.route("/api/messages", methods=["POST", "OPTIONS"])
+def messages():
+    if request.method == "OPTIONS":
+        r = Response()
+        r.headers["Access-Control-Allow-Origin"] = "*"
+        r.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        r.headers["Access-Control-Allow-Headers"] = "Content-Type"
+        return r
 
-    def do_POST(self):
-        length = int(self.headers.get("Content-Length", 0))
-        body = self.rfile.read(length)
+    if not API_KEY:
+        return {"error": {"message": "API key not configured on server."}}, 500
 
-        if not API_KEY:
-            self._json(500, b'{"error":{"message":"API key not configured on server."}}')
-            return
-
-        try:
-            resp = requests.post(
-                "https://api.anthropic.com/v1/messages",
-                headers={
-                    "Content-Type": "application/json",
-                    "x-api-key": API_KEY,
-                    "anthropic-version": "2023-06-01",
-                },
-                data=body,
-                timeout=30,
-            )
-            self._json(resp.status_code, resp.content)
-        except Exception as e:
-            msg = str(e).encode()
-            self._json(500, b'{"error":{"message":"Proxy error: ' + msg + b'"}}')
-
-    def _json(self, status, body):
-        self.send_response(status)
-        self._cors()
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(body)
-
-    def _cors(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+    try:
+        resp = requests.post(
+            "https://api.anthropic.com/v1/messages",
+            headers={
+                "Content-Type": "application/json",
+                "x-api-key": API_KEY,
+                "anthropic-version": "2023-06-01",
+            },
+            data=request.get_data(),
+            timeout=30,
+        )
+        return Response(resp.content, status=resp.status_code, mimetype="application/json")
+    except Exception as e:
+        return {"error": {"message": f"Proxy error: {str(e)}"}}, 500

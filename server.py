@@ -40,9 +40,9 @@ def rate_limited(e):
 
 # ── ROUTES ────────────────────────────────────────────────
 @app.route("/")
-@app.route("/vibe-art.html")
+@app.route("/index.html")
 def index():
-    return send_from_directory(HERE, "vibe-art.html")
+    return send_from_directory(HERE, "index.html")
 
 
 @app.route("/api/messages", methods=["POST"])
