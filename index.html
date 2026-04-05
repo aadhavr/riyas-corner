@@ -28,10 +28,22 @@
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
+      background: radial-gradient(ellipse at 30% 20%, #fef8ec 0%, #fdf3e3 30%, #f9ebd6 60%, #f4e2c6 100%);
       color: var(--ink);
       min-height: 100vh;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M17 2 Q9 9 3 17 L7 15 Q11 9 17 2Z' fill='%23c8a06a'/><path d='M3 17 L1 20 L5 16Z' fill='%231a0a04'/><path d='M17 2 Q9 9 3 17 L4 16 Q10 8 17 2Z' fill='%23deba85'/></svg>") 2 18, auto;
     }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(60, 20, 5, 0.07) 100%);
+      pointer-events: none;
+      z-index: 9997;
+    }
+
+    a, button { cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20'><path d='M17 2 Q9 9 3 17 L7 15 Q11 9 17 2Z' fill='%23b03a20'/><path d='M3 17 L1 20 L5 16Z' fill='%231a0a04'/><path d='M17 2 Q9 9 3 17 L4 16 Q10 8 17 2Z' fill='%23c85530'/></svg>") 2 18, pointer; }
 
     /* ── MASTHEAD ──────────────────────────────────────── */
     header {
@@ -499,6 +511,33 @@
 <div class="credit">Made with ♥ in California by Aadhav</div>
 
 <script>
+  /* ── PAPER GRAIN ─────────────────────────────────── */
+  (function() {
+    const c = document.createElement('canvas');
+    Object.assign(c.style, {
+      position: 'fixed', inset: '0', width: '100vw', height: '100vh',
+      pointerEvents: 'none', zIndex: '9998', opacity: '0.038',
+      mixBlendMode: 'multiply'
+    });
+    document.body.appendChild(c);
+    const ctx = c.getContext('2d');
+    let w, h;
+    function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+    function grain() {
+      const img = ctx.createImageData(w, h);
+      const d = img.data;
+      for (let i = 0; i < d.length; i += 4) {
+        const v = (Math.random() * 255) | 0;
+        d[i] = d[i+1] = d[i+2] = v; d[i+3] = 255;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+    let last = 0;
+    function loop(t) { if (t - last > 120) { grain(); last = t; } requestAnimationFrame(loop); }
+    window.addEventListener('resize', resize);
+    resize(); requestAnimationFrame(loop);
+  })();
+
   /* ── INIT ────────────────────────────────────────── */
   (function init() {
     document.getElementById('vibe').addEventListener('keydown', e => {
