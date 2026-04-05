@@ -32,13 +32,13 @@
       background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='250' height='250'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='250' height='250' filter='url(%23p)' opacity='0.07'/></svg>");
       color: var(--ink);
       min-height: 100vh;
-      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M40 4 C34 6,26 12,16 22 L8 32 C6 34,4 36,4 38 C4 40,6 40,8 38 C10 36,14 30,20 24 C22 22,22 24,24 24 C26 24,26 22,28 22 C30 22,30 20,32 18 C36 14,38 10,40 4Z' fill='%23c89060'/><path d='M38 6 C32 10,24 16,16 24' stroke='%23d4a070' stroke-width='1.5' fill='none' opacity='0.5'/></svg>") 4 38, auto;
+      cursor: url('/default_hand.png') 36 31, auto;
     }
 
-    a, button { cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M0 36 C6 34,14 28,24 18 L32 8 C34 6,36 4,36 2 C36 0,34 0,32 2 C30 4,26 10,20 16 C18 18,18 16,16 16 C14 16,14 18,12 18 C10 18,10 20,8 20 C4 24,2 30,0 36Z' fill='%23c89060'/><path d='M2 34 C8 28,16 22,24 16' stroke='%23d4a070' stroke-width='1.5' fill='none' opacity='0.5'/></svg>") 36 2, pointer; }
+    a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
 
     body.is-scrolling, body.is-scrolling a, body.is-scrolling button {
-      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><path d='M40 4 C34 6,26 12,16 22 L8 32 C6 34,4 36,4 38 C4 40,6 40,8 38 C10 36,14 30,20 24 C22 22,22 24,24 24 C26 24,26 22,28 22 C30 22,30 20,32 18 C36 14,38 10,40 4Z' fill='%23c89060'/><path d='M38 6 C32 10,24 16,16 24' stroke='%23d4a070' stroke-width='1.5' fill='none' opacity='0.5'/></svg>") 4 38, auto !important;
+      cursor: url('/default_hand.png') 36 31, auto !important;
     }
 
     /* ── MASTHEAD ──────────────────────────────────────── */
@@ -64,9 +64,18 @@
     }
 
     .masthead-title-wrap {
-      padding: 18px 28px 14px;
+      padding: 18px 28px 12px;
       text-align: center;
       border-bottom: 1px solid var(--border);
+    }
+
+    .tagline {
+      font-size: 10.5px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--mid);
+      letter-spacing: 0.05em;
+      margin-top: 8px;
     }
 
     h1 {
@@ -451,6 +460,7 @@
   </div>
   <div class="masthead-title-wrap">
     <h1>Riya's Corner</h1>
+    <p class="tagline">Describe a feeling, a moment, an atmosphere — and find the art that already lives there.</p>
   </div>
 </header>
 
