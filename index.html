@@ -61,7 +61,7 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
       font-weight: 500;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--muted);
+      color: var(--bg);
     }
 
     .masthead-meta .meta-right { text-align: right; }
@@ -163,7 +163,7 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
 
     .search-footer-bar {
       padding: 5px 28px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--bg);
       display: flex;
       justify-content: flex-end;
     }
@@ -501,6 +501,34 @@ a, button { cursor: url('/hover_hand.png') 60 41, pointer; }
       clearTimeout(t);
       t = setTimeout(() => document.body.classList.remove('is-scrolling'), 400);
     }, { passive: true });
+  })();
+
+  /* ── CENTER-ONLY HOVER CURSOR ON CARDS ───────────── */
+  (function() {
+    let lastCard = null;
+    document.addEventListener('mousemove', function(e) {
+      const card = e.target.closest('.card');
+
+      if (lastCard && lastCard !== card) {
+        lastCard.style.cursor = '';
+        lastCard = null;
+      }
+
+      if (!card) return;
+      lastCard = card;
+
+      const imgWrap = card.querySelector('.card-img-wrap');
+      if (!imgWrap) return;
+
+      const rect = imgWrap.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width;
+      const relY = (e.clientY - rect.top) / rect.height;
+      const pad = 0.28;
+      const inCenter = relX > pad && relX < 1 - pad && relY > pad && relY < 1 - pad;
+      card.style.cursor = inCenter
+        ? "url('/hover_hand.png') 60 41, pointer"
+        : "url('/default_hand.png') 36 31, auto";
+    });
   })();
 
   /* ── INIT ────────────────────────────────────────── */
